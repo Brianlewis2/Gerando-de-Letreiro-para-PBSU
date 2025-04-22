@@ -1,119 +1,176 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Gerador de Letreiro - ProtonBus</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      background: #111;
-      color: white;
-      font-family: 'Arial', sans-serif;
-      text-align: center;
-      padding: 20px;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #11114E, #2563eb);
+      color: #f1f5f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      min-height: 100vh;
     }
 
     .container {
+      background: #1e293b;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.4);
       max-width: 700px;
-      margin: auto;
-      padding: 20px;
-      background: #1c1c1c;
+      width: 100%;
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      text-align: center;
+      color: #FF9900;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
       border-radius: 10px;
-      box-shadow: 0 0 15px #000;
-    }
-
-    input, select, button {
-      margin: 10px;
-      padding: 10px;
-      font-size: 16px;
       border: none;
-      border-radius: 5px;
+      font-size: 16px;
+      background: #334155;
+      color: white;
+      transition: 0.3s;
     }
 
-    input[type="color"] {
-      padding: 0;
-      width: 60px;
-      height: 40px;
-      cursor: pointer;
+    input:focus, select:focus {
+      outline: none;
+      background: #475569;
     }
 
     button {
-      background: #444;
+      margin-top: 20px;
+      width: 100%;
+      background: #3b82f6;
       color: white;
+      border: none;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 10px;
       cursor: pointer;
       transition: background 0.3s;
     }
 
     button:hover {
-      background: #666;
+      background: #2563eb;
     }
 
     canvas {
-      margin-top: 20px;
-      border: 2px solid #fff;
+      margin-top: 30px;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border: 3px solid #60a5fa;
+      border-radius: 15px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .links {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .links a {
+      background: #334155;
+      padding: 12px;
+      text-align: center;
+      border-radius: 10px;
+      color: #f1f5f9;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .links a:hover {
+      background: #475569;
+    }
+
+    .pix {
+      background: #0f172a;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 30px;
+      text-align: center;
+      border: 1px dashed #60a5fa;
+    }
+
+    .pix p {
+      margin-top: 5px;
+      word-break: break-word;
+    }
+
+    .pix button {
+      background: #3b82f6;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 10px;
+    }
+
+    .pix button:hover {
+      background: #2563eb;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #94a3b8;
+      font-size: 14px;
     }
 
     #download {
-      display: inline-block;
-      margin-top: 15px;
-      color: #0f0;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    #footer {
-      margin-top: 40px;
-      font-size: 14px;
-      color: #aaa;
-    }
-
-    .social-buttons {
-      margin-top: 20px;
-    }
-
-    .social-buttons a {
-      display: inline-block;
-      margin: 5px;
-      padding: 10px 20px;
-      background: #222;
-      color: white;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-
-    .social-buttons a:hover {
-      background: #444;
-    }
-
-    #whatsapp-button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #25D366;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-weight: bold;
-      text-decoration: none;
-      transition: background 0.3s;
-    }
-
-    #whatsapp-button:hover {
-      background-color: #1ebe57;
-    }
-
-    label {
+      background-color: #34D399;
+      padding: 16px;
+      font-size: 18px;
+      border-radius: 12px;
+      text-align: center;
       display: block;
-      margin-top: 15px;
-      font-weight: bold;
+      margin-top: 10px;
+      width: 100%;
     }
+
+    #download:hover {
+      background-color: #10B981;
+    }
+
   </style>
 </head>
 <body>
+
   <div class="container">
     <h1>Gerador de Letreiro - ProtonBus</h1>
-    
+
     <label for="tipo">Tipo de Letreiro:</label>
     <select id="tipo" onchange="ajustarCanvas()">
       <option value="Frontal">Frontal</option>
@@ -131,34 +188,36 @@
     <label for="cor">Cor do Letreiro:</label>
     <input type="color" id="cor" value="#FF9900">
 
-    <br>
     <button onclick="gerarLetreiro()">Gerar Letreiro</button>
 
     <canvas id="letreiro" width="512" height="128"></canvas>
+    <a id="download" href="#" download="letreiro.png">Baixar Letreiro</a>
 
-    <br>
-    <a id="download" download="letreiro.png">Baixar Letreiro</a>
-
-    <br>
-    <a id="whatsapp-button" href="https://wa.me/5521967854198?text=Ol%C3%A1%2C%20estou%20com%20um%20problema%20ao%20gerar%20o%20letreiro%20no%20site.%20Poderia%20me%20ajudar%3F" target="_blank">
-      Suporte via WhatsApp
-    </a>
-
-    <div class="social-buttons">
+    <div class="links">
+      <a href="https://chat.whatsapp.com/IP02EBNM9DaDTmM6zhsvdq" target="_blank">Grupo Oficial no WhatsApp</a>
+      <a href="https://wa.me/5521967854198?text=Ol%C3%A1%2C%20estou%20com%20um%20problema%20ao%20gerar%20o%20letreiro%20no%20site.%20Poderia%20me%20ajudar%3F" target="_blank">Suporte via WhatsApp</a>
       <a href="https://youtube.com/@busologobrian?si=SjyfBX4Sy4wyXVtY" target="_blank">Canal no YouTube</a>
       <a href="https://instagram.com/Brian_lewis_2" target="_blank">Instagram</a>
     </div>
 
-    <div id="footer">
-      Desenvolvido por Brian Lewis
+    <div class="pix">
+      <strong>Apoie o Projeto</strong>
+      <p>Copie a chave Pix abaixo para realizar sua contribuição:</p>
+      <button onclick="mostrarChavePix()">Clique para copiar chave Pix</button>
+      <input type="text" id="chavePix" value="9ac4aaaa-b398-44d3-916a-bfa5a1705816" readonly style="display: none;">
+      <button id="copiarBtn" onclick="copiarChavePix()" style="display: none;">Copiar Chave Pix</button>
+      <p>Qualquer valor é bem-vindo!</p>
     </div>
+
+    <footer>
+      Desenvolvido por Brian Lewis
+    </footer>
   </div>
 
   <script>
     function ajustarCanvas() {
       const tipo = document.getElementById('tipo').value;
       const canvas = document.getElementById('letreiro');
-
       switch (tipo) {
         case 'Frontal':
           canvas.width = 512;
@@ -181,14 +240,13 @@
 
     function gerarLetreiro() {
       ajustarCanvas();
-
       const linha = document.getElementById('linha').value;
       const destino = document.getElementById('destino').value;
       const cor = document.getElementById('cor').value;
       const canvas = document.getElementById('letreiro');
       const ctx = canvas.getContext('2d');
 
-      ctx.fillStyle = '#000';
+      ctx.fillStyle = 'black';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       ctx.fillStyle = cor;
@@ -197,8 +255,28 @@
 
       const link = document.getElementById('download');
       link.href = canvas.toDataURL('image/png');
-      link.style.display = 'inline-block';
+    }
+
+    function mostrarChavePix() {
+      document.getElementById("chavePix").style.display = "block";
+      document.getElementById("copiarBtn").style.display = "block";
+    }
+
+    function copiarChavePix() {
+      const chavePix = document.getElementById("chavePix");
+      chavePix.select();
+      chavePix.setSelectionRange(0, 99999); // Para dispositivos móveis
+
+      // Tentando usar execCommand para garantir compatibilidade
+      const sucesso = document.execCommand('copy');
+
+      if (sucesso) {
+        alert('Chave Pix copiada para a área de transferência!');
+      } else {
+        alert('Falha ao copiar a chave Pix.');
+      }
     }
   </script>
+
 </body>
 </html>
