@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gerador de Letreiro - ProtonBus 🚍✨</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #11114E, #2563eb);
+      color: #f1f5f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      min-height: 100vh;
+      font-size: 16px;
+    }
+
+    .container {
+      background: #1e293b;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.4);
+      max-width: 700px;
+      width: 100%;
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      text-align: center;
+      color: #FF9900;
+      margin-bottom: 25px;
+      font-size: 2rem;
+      text-transform: uppercase;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+      background: #334155;
+      color: white;
+      transition: 0.3s;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      background: #475569;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #2563eb;
+    }
+
+    canvas {
+      margin-top: 30px;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border: 3px solid #60a5fa;
+      border-radius: 15px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .links {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .links a {
+      background: #334155;
+      padding: 12px;
+      text-align: center;
+      border-radius: 10px;
+      color: #f1f5f9;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .links a:hover {
+      background: #475569;
+    }
+
+    .pix {
+      background: #0f172a;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 30px;
+      text-align: center;
+      border: 1px dashed #60a5fa;
+    }
+
+    .pix p {
+      margin-top: 5px;
+      word-break: break-word;
+    }
+
+    .pix button {
+      background: #3b82f6;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 10px;
+    }
+
+    .pix button:hover {
+      background: #2563eb;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #94a3b8;
+      font-size: 14px;
+    }
+
+    #download {
+      background-color: #34D399;
+      padding: 16px;
+      font-size: 18px;
+      border-radius: 12px;
+      text-align: center;
+      display: block;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    #download:hover {
+      background-color: #10B981;
+    }
+
+    #videoButton {
+      width: 100%;
+      display: block;
+      margin-top: 10px;
+    }
+
+    #videoButton button {
+      background: #60a5fa;
+      color: white;
+      border: none;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+      width: 100%;
+      text-align: center;
+    }
+
+    #videoButton button:hover {
+      background: #2563eb;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Gerador de Letreiro - ProtonBus 🚍✨</h1>
+
+    <label for="tipo">Tipo de Letreiro:</label>
+    <select id="tipo" onchange="ajustarCanvas()">
+      <option value="Frontal">Frontal</option>
+      <option value="Lateral">Lateral</option>
+      <option value="Traseiro">Traseiro</option>
+      <option value="Interno">Interno</option>
+    </select>
+
+    <label for="linha">Número da Linha:</label>
+    <input type="text" id="linha" placeholder="Ex: 397D" />
+
+    <label for="destino">Destino:</label>
+    <input type="text" id="destino" placeholder="Ex: Seropédica via Campo Grande" />
+
+    <label for="cor">Cor do Letreiro:</label>
+    <input type="color" id="cor" value="#FF9900" />
+    <label for="codigoCor">Código Hexadecimal da Cor:</label>
+    <input type="text" id="codigoCor" placeholder="Ex: #FF9900" />
+
+    <label for="fonte">Fonte do Letreiro:</label>
+    <input type="file" id="fonte" accept=".ttf" onchange="carregarFonte(event)" />
+
+    <button onclick="gerarLetreiro()">Gerar Letreiro 💡</button>
+
+    <canvas id="letreiro" width="512" height="128"></canvas>
+    <a id="download" href="#" download="letreiro.png">Baixar Letreiro 📥</a>
+
+    <!-- Botão do vídeo "Como colocar no jogo" -->
+    <a href="https://youtu.be/deMaQvNpJNg?si=DarpGc2sEQOUuAJa" target="_blank" id="videoButton">
+      <button>Como Colocar no Jogo 🎮</button>
+    </a>
+
+    <div class="links">
+      <a href="https://chat.whatsapp.com/IP02EBNM9DaDTmM6zhsvdq" target="_blank">Grupo Oficial no WhatsApp 💬</a>
+      <a href="https://wa.me/5521967854198?text=Ol%C3%A1%2C%20estou%20com%20um%20problema%20ao%20gerar%20o%20letreiro%20no%20site.%20Poderia%20me%20ajudar%3F" target="_blank">Suporte via WhatsApp 🆘</a>
+      <a href="https://youtube.com/@busologobrian?si=SjyfBX4Sy4wyXVtY" target="_blank">Canal no YouTube 📹</a>
+      <a href="https://instagram.com/Brian_lewis_2" target="_blank">Instagram 📸</a>
+    </div>
+
+    <div class="pix">
+      <strong>Apoie o Projeto 💖</strong>
+      <p>Copie a chave Pix abaixo para realizar sua contribuição:</p>
+      <button onclick="mostrarChavePix()">Clique para copiar chave Pix 🔑</button>
+      <input type="text" id="chavePix" value="9ac4aaaa-b398-44d3-916a-bfa5a1705816" readonly style="display: none;" />
+      <button id="copiarBtn" onclick="copiarChavePix()" style="display: none;">Copiar Chave Pix 📋</button>
+      <p>Qualquer valor é bem-vindo! 🙏</p>
+    </div>
+
+    <footer>
+      Desenvolvido por Brian Lewis 🔧
+    </footer>
+  </div>
+
+  <script>
+    let customFont = null; // Variável para armazenar a fonte personalizada
+
+    function ajustarCanvas() {
+      const tipo = document.getElementById('tipo').value;
+      const canvas = document.getElementById('letreiro');
+      switch (tipo) {
+        case 'Frontal':
+          canvas.width = 512;
+          canvas.height = 128;
+          break;
+        case 'Lateral':
+          canvas.width = 512;
+          canvas.height = 64;
+          break;
+        case 'Traseiro':
+          canvas.width = 256;
+          canvas.height = 64;
+          break;
+        case 'Interno':
+          canvas.width = 384;
+          canvas.height = 64;
+          break;
+      }
+    }
+
+    function gerarLetreiro() {
+      ajustarCanvas();
+      const linha = document.getElementById('linha').value;
+      const destino = document.getElementById('destino').value;
+      const cor = document.getElementById('cor').value;
+      const codigoCor = document.getElementById('codigoCor').value;
+      const canvas = document.getElementById('letreiro');
+      const ctx = canvas.getContext('2d');
+
+      ctx.fillStyle = 'black';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = codigoCor || cor;
+
+      if (customFont) {
+        ctx.font = `bold 24px 'CustomFont'`; 
+      } else {
+        ctx.font = 'bold 24px Arial';
+      }
+
+      ctx.fillText(`${linha} - ${destino}`, 10, canvas.height / 2 + 10);
+
+      const link = document.getElementById('download');
+      link.href = canvas.toDataURL('image/png');
+    }
+
+    function carregarFonte(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const font = new FontFace('CustomFont', e.target.result);
+          font.load().then(function(loadedFont) {
+            document.fonts.add(loadedFont);
+            customFont = loadedFont;
+            alert('Fonte carregada com sucesso!');
+          }).catch(function(error) {
+            alert('Falha ao carregar a fonte!');
+          });
+        };
+        reader.readAsArrayBuffer(file);
+      }
+    }
+
+    function copiarChavePix() {
+      const chavePix = document.getElementById("chavePix");
+      chavePix.select();
+      chavePix.setSelectionRange(0, 99999);
+      document.execCommand("copy");
+      alert("Chave Pix copiada!");
+    }
+
+    function mostrarChavePix() {
+      document.getElementById("chavePix").style.display = "block";
+      document.getElementById("copiarBtn").style.display = "block";
+    }
+  </script>
+</body>
+</html>
