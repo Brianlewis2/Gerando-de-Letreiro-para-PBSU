@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://brianlewis2.github.io/Gerando-de-Letreiro-para-PBSU/sitemap.xml
