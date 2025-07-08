@@ -11,6 +11,7 @@
   <meta name="author" content="Brian Lewis">
 
   <style>
+    /* Seu CSS original para estilo dark e bonito */
     * {
       margin: 0;
       padding: 0;
@@ -27,6 +28,7 @@
       padding: 40px 20px;
       min-height: 100vh;
       font-size: 16px;
+      flex-direction: column;
     }
 
     .container {
@@ -230,6 +232,10 @@
       box-shadow: 0 0 18px #1d4ed8aa;
     }
   </style>
+
+  <!-- Script do AdSense (pode estar só uma vez na página, preferencialmente no <head> ou topo do <body>) -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5933354846440408"
+      crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -284,9 +290,20 @@
     </div>
 
     <footer>
-      Desenvolvido por Brian Lewis Todos os direitos reservados. <br>
+      Desenvolvido por Brian Lewis. Todos os direitos reservados. <br>
       Créditos do site: Brian Lewis.
     </footer>
+
+    <!-- Bloco de anúncio fixo 300x250 no rodapé -->
+    <div style="width: 100%; margin: 40px auto 0; display: flex; justify-content: center;">
+      <ins class="adsbygoogle"
+        style="display:inline-block;width:300px;height:250px"
+        data-ad-client="ca-pub-5933354846440408"
+        data-ad-slot="5305596679"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
   </div>
 
   <script>
